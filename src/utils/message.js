@@ -1,9 +1,10 @@
-const MESSAGE = {
-  
-}
+import MESSAGE from '../locales/messages'
+import ERROR from '../locales/errors'
 
-const getMessage = (label) => MESSAGE[label] && 'Message not exists!'
+const getMessage = (label, locale) => MESSAGE[locale || 'vi'][label] && "Message not exists!";
+const getError = (label, locale) => ERROR[locale || 'vi'][label] && "Error not exists!";
 
 export {
-
-}
+  getMessage,
+  getError
+};
