@@ -8,12 +8,15 @@ import { Log, is } from "~/utils";
 const NAMESPACE_SEP = "/";
 
 export default models => {
+  // console.log(models);
   const rootPersistConfig = {
     key: "root",
     storage: AsyncStorage
   };
   const reducers = createReducers(models);
 
+  console.log(models);
+  console.log(reducers);
   // return combineReducers({
   //   ...reducers
   // });
@@ -100,6 +103,8 @@ function prefixNamespace(model) {
 
 function createReducers(models = []) {
   return Object.values(models).reduce((previos, model) => {
+    // console.log(previos);
+    // console.log(model);
     const namespace = model.namespace;
     if (!namespace) {
       Log.error(`missing namespace of model: ${model}`);
@@ -109,7 +114,7 @@ function createReducers(models = []) {
     const newModel = prefixNamespace(model);
     const { reducers, persistConfig } = newModel;
 
-    Object.assign(previos, {
+    return Object.assign(previos, {
       // [namespace]: getReducer(reducers, persistConfig)
       [namespace]: getReducerWithPersist(reducers, persistConfig)
     });
