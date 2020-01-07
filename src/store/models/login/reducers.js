@@ -6,3 +6,12 @@ export const reducers = {
     }
   }
 }
+
+export const persistConfig = {
+  // key: "",
+  // storage: "",
+  // blacklist: "",
+  // whitelist: "",
+  // transforms: "",
+  // stateReconciler: ""
+}

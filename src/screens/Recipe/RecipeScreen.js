@@ -105,7 +105,7 @@ export default class RecipeScreen extends React.Component {
           </View>
 
           <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
+            <Image style={styles.infoPhoto} source={require('~/assets/icons/time.png')} />
             <Text style={styles.infoRecipe}>{item.time} minutes </Text>
           </View>
 
@@ -129,7 +129,7 @@ export default class RecipeScreen extends React.Component {
 
 /*cooking steps
 <View style={styles.infoContainer}>
-  <Image style={styles.infoPhoto} source={require('../../../assets/icons/info.png')} />
+  <Image style={styles.infoPhoto} source={require('~/assets/icons/info.png')} />
   <Text style={styles.infoRecipe}>Cooking Steps</Text>
 </View>
 <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>

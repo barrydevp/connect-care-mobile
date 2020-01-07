@@ -1,12 +1,13 @@
-import reducers from './reducers';
-import sagas from './sagas';
+import { reducers, persistConfig } from "./reducers";
+import sagas from "./sagas";
 // import type from './types'
 
 export default {
-  namespace: 'login',
+  namespace: "login",
   state: {
     status: false
   },
   sagas,
-  reducers
-}
+  reducers,
+  persistConfig
+};

@@ -4,7 +4,8 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import HomeScreen from "../screens/Home/HomeScreen";
 import DrawerContainer from "../screens/DrawerContainer/DrawerContainer";
-import AuthScreen from "../screens/AuthScreen"
+import AuthLoadingScreen from "~/screens/AuthLoadingScreen"
+import AuthScreen from "../screens/AuthScreen";
 
 // console.disableYellowBox = true;
 
@@ -48,11 +49,13 @@ export default AppContainer = createAppContainer(
       // AppInfos,
       // RGPD,
       // Contacts,
-      Main: createDrawerNavigator(
+      AuthLoading: AuthLoadingScreen,
+      Auth: AuthScreen,
+      App: createDrawerNavigator(
         {
           MainDrawer: createStackNavigator(
             {
-              Auth: AuthScreen
+              TestAuth: AuthScreen
               // Categories: CategoriesScreen,
               // Recipe: RecipeScreen,
               // RecipesList: RecipesListScreen,
@@ -61,7 +64,7 @@ export default AppContainer = createAppContainer(
               // IngredientsDetails: IngredientsDetailsScreen
             },
             {
-              initialRouteName: "Auth",
+              initialRouteName: "TestAuth",
               // headerMode: 'float',
               defaulfNavigationOptions: ({ navigation }) => ({
                 headerTitleStyle: {
@@ -83,7 +86,8 @@ export default AppContainer = createAppContainer(
       )
     },
     {
-      initialRouteName: "Main"
+      initialRouteName: "AuthLoading",
+      headerMode: "none"
     }
   )
 );
