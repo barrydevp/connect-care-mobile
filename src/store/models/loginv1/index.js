@@ -3,10 +3,10 @@ import sagas from "./sagas";
 // import type from './types'
 
 export default {
-  namespace: "login",
+  namespace: "loginv1",
   state: {
-    status: false,
-    // "x-auth-key": "123",
+    status: true,
+    "x-auth-key-v1": "123",
   },
   sagas,
   reducers,

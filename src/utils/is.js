@@ -29,3 +29,4 @@ export const symbol = sym =>
   sym !== Symbol.prototype;
 // export const multicast = ch => channel(ch) && ch[MULTICAST];
 // export const effect = eff => eff && eff[IO];
+export const date = date => !isNaN(Date.parse(date));

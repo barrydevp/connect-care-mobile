@@ -1,5 +1,7 @@
-import login from './login';
+import login from "./login";
+import loginv1 from "./loginv1";
 
 export default {
-  login
-}
+  login,
+  loginv1
+};

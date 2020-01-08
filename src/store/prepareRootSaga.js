@@ -1,15 +1,22 @@
 import { all } from "redux-saga/effects";
+import { Log } from "~/utils";
 
-export default function*(models = []) {
-  const allSagas = Object.values(models).reduce((previous, model) => {
-    const sagas = model.sagas;
+export default function(models = []) {
+  return function*() {
+    const allSagas = Object.values(models).reduce((previous, model) => {
+      const sagas = model.sagas;
 
-    if (!sagas) return previous;
+      if (!sagas) {
+        Log.warn(`sagas is undefined`);
 
-    const activeSagas = Object.values(sagas).map(saga => saga());
+        return previous;
+      }
 
-    return previous.concat(activeSagas);
-  }, []);
+      const activeSagas = Object.values(sagas).map(saga => saga());
 
-  yield all(allSagas);
+      return previous.concat(activeSagas);
+    }, []);
+
+    yield all(allSagas);
+  };
 }

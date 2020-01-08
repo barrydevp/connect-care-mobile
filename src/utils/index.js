@@ -4,6 +4,7 @@ import request from "./request";
 import * as is from "./is";
 import * as Log from "./log";
 import * as CP from "./convertPercent";
+import * as createExpirationTransform from "./createExpirationTransform";
 
 const returnTrue = () => true;
 const returnUndef = () => {};
@@ -17,4 +18,4 @@ if (!__DEV__) {
   });
 }
 
-export { Message, Validator, request, is, Log, CP };
+export { Message, Validator, request, is, Log, CP, createExpirationTransform };
