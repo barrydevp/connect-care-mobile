@@ -35,8 +35,8 @@ export default function(models = []) {
   };
   const [reducers, newModels] = createReducers(models);
   memoModels = newModels;
-  console.log(models);
-  console.log(newModels);
+  // console.log(models);
+  // console.log(newModels);
   // console.log(reducers);
   // return combineReducers({
   //   ...reducers
@@ -115,10 +115,14 @@ function prefixNamespace(model) {
     newModel.reducers = prefix(cloneReducers, namespace, "reducer");
   }
 
-  if (persistConfig) {
-    newModel.persistConfig.key = namespace;
+  if (
+    is.undef(persistConfig) ||
+    !is.object(persistConfig) ||
+    _.isEmpty(persistConfig)
+  ) {
+    newModel.persistConfig = undefined;
   } else {
-    newModel.persistConfig = { key: namespace };
+    newModel.persistConfig.key = namespace;
   }
 
   // if (sagas && is.object(sagas)) {
@@ -146,7 +150,7 @@ function createReducers(models = []) {
       newModels[namespace] = newModel;
       const { reducers, persistConfig } = newModel;
 
-      if (is.undef(persistConfig) || !is.object(persistConfig))
+      if (is.undef(persistConfig))
         return Object.assign(previos, {
           [namespace]: getReducer(reducers)
         });

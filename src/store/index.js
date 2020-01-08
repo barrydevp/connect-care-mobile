@@ -11,10 +11,10 @@ const reducers = prepareReducers(models);
 const rootSagas = prepareRootSaga(models);
 const initialState = prepareInitialState(models);
 
-console.log("models:", models);
-console.log("reducers:", reducers);
-console.log("rootSagas:", rootSagas);
-console.log("initialState:", initialState);
+// console.log("models:", models);
+// console.log("reducers:", reducers);
+// console.log("rootSagas:", rootSagas);
+// console.log("initialState:", initialState);
 
 const sagaMiddleware = createSagaMiddleware();
 

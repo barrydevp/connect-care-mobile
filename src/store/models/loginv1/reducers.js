@@ -20,7 +20,7 @@ export const reducers = {
 }
 
 export const persistConfig = {
-  // key: "",
+  key: "loginv1",
   // storage: "",
   // blacklist: "",
   // whitelist: ["x-auth-key"],

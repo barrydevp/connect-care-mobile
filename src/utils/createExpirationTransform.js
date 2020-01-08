@@ -5,6 +5,7 @@ import * as is from "./is";
 const PERSIST_EXPIRE_DEFAULT_KEY = "persistExpiresAt";
 
 function dateToUnix(date) {
+  // console.log(date);
   return +(date.getTime() / 1000).toFixed(0);
 }
 
@@ -54,10 +55,11 @@ export const keyInProperty = function(config, transformOptions) {
   }
 
   function outbound(state) {
+    // console.log(state);
     if (!state) return state;
 
     const validState = traverse(state).forEach(function(value) {
-      if (!value || is.object(value)) {
+      if (!value || !is.object(value)) {
         return;
       }
 
@@ -72,12 +74,15 @@ export const keyInProperty = function(config, transformOptions) {
       }
 
       if (dateToUnix(new Date(expireDate)) < dateToUnix(new Date())) {
+        // console.log(config.defaultState(state));
         this.update(
           (is.func(config.defaultState) && config.defaultState(state)) ||
             config.defaultState
         );
       }
     });
+
+    // console.log(validState);
 
     return validState;
   }
