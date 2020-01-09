@@ -7,7 +7,10 @@ const defaultOnError = error => {
 
 const defaultType = "takeEvery";
 
-export default function prepareRootSaga(models = [], { onError, onEffect } = { onError: defaultOnError }) {
+export default function prepareRootSaga(
+  models = [],
+  { onError, onEffect } = { onError: defaultOnError }
+) {
   return function*() {
     const allSagas = createRootSagas();
 
@@ -16,25 +19,49 @@ export default function prepareRootSaga(models = [], { onError, onEffect } = { o
     yield sagaEffects.all(allSagas);
   };
 
-  function createWatcherSaga(saga) {
-    let type, effect;
+  function createWatcherSaga(key, effect, type, ms, delayMs) {
+    type = type || defaultType;
 
-    if(is.array(saga)) {
-      effect = saga[0];
-      type = saga[1];
-    } else {
-      effect = saga;
-      type = defaultType;
-    }
-    
-    switch(type) {
-      case "takeLast":
+    switch (type) {
+      case "takeLatest":
+        return function*() {
+          yield sagaEffects.takeLatest(key, effect);
+        };
+      case "throttle":
+        return function*() {
+          yield sagaEffects.throttle(ms, key, effect);
+        };
+      case "watcher":
+        return effect;
+      case "poll":
+        return function*() {
+          function delay(timeout) {
+            return new Promise(resolve => setTimeout(resolve, timeout));
+          }
+          function* pollSagaWorker(action) {
+            while (true) {
+              yield sagaEffects.call(effect, action);
+              yield sagaEffects.call(delay, delayMs);
+            }
+          }
+          while (true) {
+            const action = yield sagaEffects.take(`${key}-start`);
+            yield race([
+              sagaEffects.call(pollSagaWorker, action),
+              sagaEffects.take(`${key}-stop`)
+            ]);
+          }
+        };
+      default:
+        return function*() {
+          yield sagaEffects.takeEvery(key, effect);
+        };
     }
   }
 
   function createRootSagas() {
     return Object.values(models).reduce((previous, model) => {
-      console.log(model);
+      // console.log(model);
       const sagas = model.sagas;
 
       if (!is.object(sagas) && !is.array(sagas)) {
@@ -43,7 +70,21 @@ export default function prepareRootSaga(models = [], { onError, onEffect } = { o
         return previous;
       }
 
-      const activeSagas = Object.values(sagas).map(saga => saga());
+      const activeSagas = Object.keys(sagas).map(key => {
+        const saga = sagas[key];
+        let effect, options;
+
+        if (is.array(saga)) {
+          effect = saga[0];
+          options = saga[1];
+        } else {
+          effect = saga;
+        }
+
+        const { type, ms, delayMs } = options || {};
+
+        return createWatcherSaga(key, effect, type, ms, delayMs)();
+      });
 
       return previous.concat(activeSagas);
     }, []);

@@ -27,12 +27,22 @@ function* authenticate({ payload: { username, password, callback } }) {
 }
 
 export default {
-  *watchAuthenticate() {
-    yield takeEvery("login/authenticate", authenticate);
-  },
-  *watchTest() {
-    yield takeEvery("login/test", function*() {
-      yield delay(5000);
-    });
-  }
+  watchAuthenticate: [
+    function*() {
+      yield takeEvery("login/authenticate", authenticate);
+    },
+    {
+      type: "watcher"
+    }
+  ],
+  watchTest: [
+    function*() {
+      yield takeEvery("login/test", function*() {
+        yield delay(5000);
+      });
+    },
+    {
+      type: "watcher"
+    }
+  ]
 };

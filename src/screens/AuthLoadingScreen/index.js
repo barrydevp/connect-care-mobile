@@ -11,10 +11,10 @@ import styles from "./styles";
 export default class extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
-    // this.props.dispatch({
-    //   type: "login/logout",
-    //   payload: { status: true }
-    // });
+    this.props.dispatch({
+      type: "login/logout",
+      payload: { status: true }
+    });
     // this.props.dispatch({
     //   type: "login/put_token",
     //   payload: { token: "test", expiresAt: moment().subtract(10, "days") }

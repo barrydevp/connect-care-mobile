@@ -9,21 +9,21 @@ import { is, Log } from "~/utils";
 
 import defaultRoot from "./defaultRoot";
 
-const defaultOptions = { root: defaultRoot, reduxPersist: true };
+const defaultOptions = { root: defaultRoot, reduxPersist: false };
 
 export default function createStoreFul(models, options = defaultOptions) {
+  // console.log(options);
   let { root, reduxPersist } = options;
   root ||
     (root = {
-      defaultRoot,
-      ...root
+      defaultRoot
     });
 
   reduxPersist = !!reduxPersist;
 
   const { persistConfig: rootPersistConfig } = root;
   const { storage, stateReconciler } = rootPersistConfig || {};
-
+  // console.log(reduxPersist);
   if (is.object(rootPersistConfig)) {
     if (!storage || !stateReconciler) {
       reduxPersist = false;
@@ -31,7 +31,7 @@ export default function createStoreFul(models, options = defaultOptions) {
   } else {
     reduxPersist = false;
   }
-
+  // console.log(reduxPersist);
   const newModels = initModels();
 
   // console.log(models);
@@ -68,6 +68,11 @@ export default function createStoreFul(models, options = defaultOptions) {
     return Object.values(models).reduce((_newModels, _model) => {
       const newModel = prefixNamespace(_model);
       // console.log("newModel, ", newModel);
+      if (!is.modelObject(_model)) {
+        Log.warn(`${_model} is not redux-useful model`);
+
+        return _newModels;
+      }
       _newModels[newModel.namespace] = newModel;
 
       return _newModels;

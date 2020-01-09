@@ -1,7 +1,10 @@
-import createStoreFul from "./redux-useful/createStoreFul";
+import { createStoreFul } from "./redux-useful";
 
-import models from "./models";
+import models, { rootModel } from "./models";
 
-const { store, persistor } = createStoreFul(models)
+const { store, persistor } = createStoreFul(models, {
+  root: rootModel,
+  reduxPersist: true
+});
 
 export { store, persistor };

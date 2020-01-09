@@ -30,3 +30,5 @@ export const symbol = sym =>
 // export const multicast = ch => channel(ch) && ch[MULTICAST];
 // export const effect = eff => eff && eff[IO];
 export const date = date => !isNaN(Date.parse(date));
+export const modelObject = model =>
+  object(model) && model.hasOwnProperty("namespace");
