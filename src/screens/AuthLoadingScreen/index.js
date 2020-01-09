@@ -1,7 +1,7 @@
 import React from "react";
-import moment from "moment";
+// import moment from "moment";
 import { connect } from "react-redux";
-import { ActivityIndicator, AsyncStorage, StatusBar, View } from "react-native";
+// import { ActivityIndicat, StatusBar, View } from "react-native";
 
 import { Spinner, Layout } from "@ui-kitten/components";
 
@@ -10,7 +10,7 @@ import styles from "./styles";
 @connect(({ login, loginv1 }) => ({ login, loginv1 }))
 export default class extends React.Component {
   componentDidMount() {
-    // this._bootstrapAsync();
+    this._bootstrapAsync();
     // this.props.dispatch({
     //   type: "login/logout",
     //   payload: { status: true }
@@ -23,16 +23,26 @@ export default class extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const token = await AsyncStorage.getItem("x-auth-key");
+    const {
+      login: { "x-auth-key": token, status },
+      navigation
+    } = this.props;
+
+    if (!status) {
+      token && dispatch({ type: "login/logout" });
+      navigation.navigate("Auth");
+
+      return;
+    }
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    // this.props.navigation.navigate(token ? "App" : "Auth");
+    navigation.navigate(token && status ? "App" : "Auth");
   };
 
   // Render any loading content that you like here
   render() {
-    console.log("loging: ", this.props.login);
+    // console.log("loging: ", this.props.login);
     // console.log("logingv1: ", this.props.loginv1);
     return (
       <Layout style={styles.container}>

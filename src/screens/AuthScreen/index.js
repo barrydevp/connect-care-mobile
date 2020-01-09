@@ -1,16 +1,16 @@
 import React from "react";
-import { AsyncStorage, Image, Text as RNText } from "react-native";
+import { connect } from "react-redux";
+import { AsyncStorage, Image, Text as RNText, Alert } from "react-native";
 import { Button, Icon, Layout, Input, Text } from "@ui-kitten/components";
 
-import { Validator } from "../../utils";
+import { Validator } from "~/utils";
 
 import styles from "./styles";
 
-export default class extends React.Component {
+@connect(({ login }) => ({ login }))
+class AuthScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    return {
-      
-    };
+    return {};
   };
 
   state = {
@@ -19,51 +19,27 @@ export default class extends React.Component {
     secureTextEntry: true
   };
 
-  _signInAsync = async () => {
+  _signInAsync = () => {
     const { username, password } = this.state;
+    const { dispatch, navigation } = this.props;
     // console.log(this);
     try {
       if (username && password) {
-        this.setState(state => {
-          isDisabled: true;
-        });
-        // console.log();
-        const response = (
-          await axios({
-            method: "post",
-            url: "http://api.dev.nhathuocgpp.com.vn/authenticate",
-            data: {
-              userName: username,
-              password: password
-            },
-            headers: {
-              "Content-Type": "application/json"
+        dispatch({
+          type: "login/authenticate",
+          payload: {
+            username,
+            password,
+            callback: () => {
+              navigation.navigate("App");
             }
-          })
-        ).data;
-
-        console.log(response);
-
-        if (response) {
-          if (response.success) {
-            await AsyncStorage.setItem("x-auth-key", response.token);
-            this.props.navigation.navigate("App");
-            return;
-          } else {
-            Alert.alert(response.error.message);
           }
-        } else {
-          Alert.alert("no data response");
-        }
+        });
       }
     } catch (error) {
       console.log(error);
       Alert.alert("error axios");
     }
-
-    this.setState(state => {
-      isDisabled: false;
-    });
   };
 
   onChangeTextOf(field) {
@@ -91,8 +67,8 @@ export default class extends React.Component {
   arrowIcon = style => <Icon {...style} name="arrow-forward-outline" />;
 
   render() {
-    const { navigation } = this.props;
-
+    const { navigation, login } = this.props;
+    // console.log(login);
     const { username, password, secureTextEntry } = this.state;
 
     const propsInputUserName = (username => {
@@ -115,7 +91,8 @@ export default class extends React.Component {
       <Layout style={styles.container}>
         <Layout style={styles.headerContainer}>
           <Layout style={styles.headerImage}>
-            <Image style={styles.logo}
+            <Image
+              style={styles.logo}
               source={require("~/assets/logoNBM.png")}
               resizeMode="stretch"
             />
@@ -150,7 +127,18 @@ export default class extends React.Component {
           />
         </Layout>
         <Layout style={styles.footerContainer}>
-          <Button style={styles.button} status="info" icon={this.arrowIcon} />
+          <Button
+            style={styles.button}
+            status="info"
+            icon={this.arrowIcon}
+            disabled={
+              !propsInputPassword[0] ||
+              !propsInputUserName[0] ||
+              !username ||
+              !password
+            }
+            onPress={this._signInAsync}
+          />
         </Layout>
       </Layout>
     );
@@ -256,3 +244,5 @@ export default class extends React.Component {
 //     );
 //   }
 // }
+
+export default AuthScreen;

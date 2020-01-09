@@ -5,6 +5,9 @@ import * as is from "./is";
 import * as Log from "./log";
 import * as CP from "./convertPercent";
 import * as createExpirationTransform from "./createExpirationTransform";
+import _ENV from "./env";
+import _ from "lodash";
+import moment from "moment";
 
 const returnTrue = () => true;
 const returnUndef = () => {};
@@ -18,4 +21,15 @@ if (!__DEV__) {
   });
 }
 
-export { Message, Validator, request, is, Log, CP, createExpirationTransform };
+export {
+  Message,
+  Validator,
+  request,
+  is,
+  Log,
+  CP,
+  createExpirationTransform,
+  _ENV,
+  _,
+  moment
+};

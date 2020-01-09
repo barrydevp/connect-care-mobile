@@ -7,11 +7,12 @@ export const reducers = {
       status
     };
   },
-  put_token: (state, { payload: { token, expiresAt } }) => {
+  put_token: (state, { payload: { token, expiresAt, status } }) => {
     return {
       ...state,
       "x-auth-key": token,
-      expiresAt
+      expiresAt,
+      status
     };
   },
   logout: state => {

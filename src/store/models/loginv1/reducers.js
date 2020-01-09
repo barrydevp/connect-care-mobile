@@ -1,4 +1,4 @@
-export const reducers = {
+export const reducers = [{
   change_status: (state, { payload: { status } }) => {
     return {
       ...state,
@@ -17,7 +17,10 @@ export const reducers = {
       
     }
   }
-}
+},(state) => {
+  // console.log("this is beforeHandle")
+  return state
+}]
 
 export const persistConfig = {
   key: "loginv1",
