@@ -4,7 +4,8 @@ import createSagaMiddleware from "redux-saga";
 import prepareReducers from "./prepareReducers";
 import prepareRootSaga from "./prepareRootSaga";
 import prepareInitialState from "./prepareInitialState";
-import { is } from "~/utils";
+import prefixNamespace from "./prefixNamespace";
+import { is, Log } from "~/utils";
 
 import defaultRoot from "./defaultRoot";
 
@@ -31,9 +32,14 @@ export default function createStoreFul(models, options = defaultOptions) {
     reduxPersist = false;
   }
 
-  const reducers = prepareReducers(models, { root, reduxPersist });
-  const rootSagas = prepareRootSaga(models);
-  const initialState = prepareInitialState(models);
+  const newModels = initModels();
+
+  // console.log(models);
+  // console.log(newModels);
+
+  const reducers = prepareReducers(newModels, { root, reduxPersist });
+  const rootSagas = prepareRootSaga(newModels);
+  const initialState = prepareInitialState(newModels);
 
   // console.log("reducers:", reducers);
   // console.log("rootSagas:", rootSagas);
@@ -56,5 +62,15 @@ export default function createStoreFul(models, options = defaultOptions) {
     sagaMiddleware.run(rootSagas);
 
     return { store };
+  }
+
+  function initModels() {
+    return Object.values(models).reduce((_newModels, _model) => {
+      const newModel = prefixNamespace(_model);
+      // console.log("newModel, ", newModel);
+      _newModels[newModel.namespace] = newModel;
+
+      return _newModels;
+    }, {});
   }
 }

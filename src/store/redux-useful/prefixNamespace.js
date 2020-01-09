@@ -15,9 +15,8 @@ function prefix(value, namespace, type) {
 }
 
 export default function prefixNamespace(model) {
-  const newModel = _.clone(model);
-  const { namespace, reducers, /* sagas, */ persistConfig } = newModel;
-  let handles, beforeHandle;
+  const { namespace, reducers, sagas, persistConfig, state } = model;
+  let handles, beforeHandle, newSagas, newPersistConfig = {};
 
   if (!namespace) {
     Log.error(`missing namespace of model: ${model}`);
@@ -25,16 +24,13 @@ export default function prefixNamespace(model) {
   }
 
   if (is.object(reducers) || is.array(reducers)) {
-    const cloneReducers = _.cloneDeep(reducers);
-
     if (is.object(reducers)) {
-      handles = prefix(cloneReducers, namespace, "reducer");
-      newModel.reducers = handles;
+      handles = _.cloneDeep(reducers);
+      handles = prefix(handles, namespace, "reducer");
     } else {
-      handles = prefix(cloneReducers[0], namespace, "reducer");
-      beforeHandle = cloneReducers[1];
-      // newModel.reducers[0] = handles;
-      newModel.reducers = [handles, beforeHandle];
+      handles = _.cloneDeep(reducers[0]);
+      handles = prefix(handles, namespace, "reducer");
+      beforeHandle = reducers[1];
     }
   } else {
     Log.error(`reducers is not Object or Array`);
@@ -45,14 +41,23 @@ export default function prefixNamespace(model) {
     !is.object(persistConfig) ||
     _.isEmpty(persistConfig)
   ) {
-    newModel.persistConfig = undefined;
+    newPersistConfig = undefined;
   } else {
-    newModel.persistConfig.key = namespace;
+    newPersistConfig.key = namespace;
   }
 
-  // if (sagas && is.object(sagas)) {
-  //   model.sagas = prefix(sagas, namespace, "sagas");
-  // }
+  if (sagas && is.object(sagas)) {
+    newSagas = prefix(sagas, namespace, "sagas");
+  }
 
-  return [newModel, handles, beforeHandle];
+  return {
+    namespace,
+    state,
+    reducers: {
+      handles,
+      beforeHandle
+    },
+    sagas: newSagas,
+    persistConfig: newPersistConfig
+  };
 }

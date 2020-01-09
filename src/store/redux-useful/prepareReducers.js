@@ -1,29 +1,19 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
-import prefixNamespace from "./prefixNamespace";
-import { is } from "~/utils";
-
-let init = 0;
-
-let memoModels = [];
+import { is, Log } from "~/utils";
 
 export default function prepareReducers(
   models = [],
   { root, reduxPersist } = {}
 ) {
+  // console.log("models from prepareReducers", models);
   const { persistConfig: rootPersistConfig } = root;
   const { storage: defaultStorage, stateReconciler: defaultStateReconciler } =
     rootPersistConfig || {};
-  // console.log(models);
 
-  const [reducers, newModels] = createReducers(models);
-  memoModels = newModels;
-  console.log(models);
-  console.log(newModels);
+  const reducers = createReducers(models);
+
   // console.log(reducers);
-  // return combineReducers({
-  //   ...reducers
-  // });
 
   if (reduxPersist)
     return persistReducer(
@@ -77,37 +67,26 @@ export default function prepareReducers(
   }
 
   function createReducers() {
-    const newModels = {};
-    init++;
+    return Object.values(models).reduce((previos, model) => {
+      const {
+        persistConfig,
+        reducers: { handles, beforeHandle },
+        namespace
+      } = model;
 
-    return [
-      Object.values(models).reduce((previos, model) => {
-        const namespace = model.namespace;
-        if (!namespace) {
-          Log.error(`missing namespace of model: ${model}`);
-          return previos;
-        }
+      if (!namespace) {
+        Log.error(`missing namespace of model: ${model}`);
+        return previos;
+      }
 
-        const [newModel, handles, beforeHandle] = prefixNamespace(model);
-        newModels[namespace] = newModel;
-        const { persistConfig } = newModel;
-
-        if (!reduxPersist || is.undef(persistConfig))
-          return Object.assign(previos, {
-            [namespace]: getReducer(handles, beforeHandle)
-          });
-
+      if (!reduxPersist || is.undef(persistConfig))
         return Object.assign(previos, {
-          [namespace]: getReducerWithPersist(
-            handles,
-            beforeHandle,
-            persistConfig
-          )
+          [namespace]: getReducer(handles, beforeHandle)
         });
-      }, {}),
-      newModels
-    ];
+
+      return Object.assign(previos, {
+        [namespace]: getReducerWithPersist(handles, beforeHandle, persistConfig)
+      });
+    }, {});
   }
 }
-
-export const getMemoModels = () => [memoModels, init > 0];

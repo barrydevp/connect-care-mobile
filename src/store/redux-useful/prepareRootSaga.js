@@ -11,7 +11,9 @@ export default function prepareRootSaga(models = [], { onError, onEffect } = { o
   return function*() {
     const allSagas = createRootSagas();
 
-    yield all(allSagas);
+    // console.log(allSagas);
+
+    yield sagaEffects.all(allSagas);
   };
 
   function createWatcherSaga(saga) {
@@ -32,6 +34,7 @@ export default function prepareRootSaga(models = [], { onError, onEffect } = { o
 
   function createRootSagas() {
     return Object.values(models).reduce((previous, model) => {
+      console.log(model);
       const sagas = model.sagas;
 
       if (!is.object(sagas) && !is.array(sagas)) {
