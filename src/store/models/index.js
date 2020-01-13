@@ -1,10 +1,12 @@
 import login from "./login";
-import loginv1 from "./loginv1";
+import auth from "./auth";
 import root from "./rootModel";
 
 export const rootModel = root;
 
+// console.log(auth);
+
 export default {
   login,
-  loginv1
+  auth
 };

@@ -3,11 +3,11 @@ import { CP as cp } from "~/utils";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
-    marginHorizontal: cp.wp(1),
-    marginVertical: cp.hp(1),
-    paddingHorizontal: cp.wp(1),
-    paddingVertical: cp.hp(1),
+    flex: 1,
+    // marginHorizontal: cp.wp(1),
+    // marginVertical: cp.hp(1),
+    // paddingHorizontal: cp.wp(1),
+    // paddingVertical: cp.hp(1),
   },
   headerContainer: {
     flex: 1,

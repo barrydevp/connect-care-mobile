@@ -3,11 +3,8 @@ import sagas from "./sagas";
 // import type from './types'
 
 export default {
-  namespace: "loginv1",
-  state: {
-    status: true,
-    "x-auth-key-v1": "123",
-  },
+  namespace: "auth",
+  state: {},
   sagas,
   reducers,
   persistConfig

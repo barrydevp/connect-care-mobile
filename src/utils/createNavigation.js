@@ -17,8 +17,10 @@ export default (navigators, screens, options) => {
     } = parent;
 
     const RouteConfigs = routes.reduce((previous, child) => {
+      const childRoute = createChildNavigation(child);
+      if (!childRoute) return previous;
       return Object.assign(previous, {
-        [child.routeName]: createChildNavigation(child)
+        [child.routeName]: childRoute
       });
     }, {});
 
@@ -47,20 +49,25 @@ export default (navigators, screens, options) => {
   }
 
   function createChildNavigation(child) {
-    const { screen, navigationType: type, routes, navigationOptions } = child;
+    const { routeConfigs: RouteConfigs, navigationType: type, routes } = child;
 
     if (is.string(type) && is.array(routes))
       return createParentNavigation(child);
 
+    const screen = getScreen(RouteConfigs.screen);
+
+    if (!screen) return;
+
     return {
-      screen: getScreen(screen),
+      ...RouteConfigs,
+      screen
 
       // The action and route params are extracted from the path.
       // action: {},
       // params: {},
 
       // Optional: Override the `navigationOptions` for the screen
-      navigationOptions
+      // navigationOptions
     };
   }
 

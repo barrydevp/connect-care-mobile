@@ -1,3 +1,8 @@
+import React from "react";
+import TabBarComponent from "~/components/TabBarComponent";
+import DrawerComponent from "~/components/DrawerComponent";
+import AuthTopBarComponent from "~/components/AuthTopBarComponent";
+
 /**
  * đối tượng navigator
  * @param { là tên của title trên header } title
@@ -15,63 +20,95 @@ export default {
   routes: [
     {
       routeName: "AuthLoading",
-      screen: "Auth/Loading"
+      routeConfigs: {
+        screen: "Auth/Loading"
+      }
     },
     {
       routeName: "Auth",
-      title: "Auth",
       navigationType: "stack",
       navigatorConfig: {
         initialRouteName: "Auth/Login",
-        headerMode: "none"
+        headerMode: "screen"
       },
       routes: [
         {
           routeName: "Auth/Login",
-          screen: "Auth/Login",
-          navigationOptions: ({ navigation }) => ({
-            title: `Login`
-          })
+          routeConfigs: {
+            screen: "Auth/Login",
+            navigationOptions: ({ navigation }) => ({
+              title: `Login`,
+              header: (props) => {
+                return <AuthTopBarComponent {...props} />;
+              }
+            }),
+          }
+        },
+        {
+          routeName: "Auth/ChoosePlace",
+          routeConfigs: {
+            screen: "Auth/ChoosePlace",
+            navigationOptions: ({ navigation }) => ({
+              title: `ChoosePlace`,
+              header: (props) => {
+                return <AuthTopBarComponent {...props} />;
+              }
+            })
+          }
         }
         // {
         //   routeName: "Auth/Signup",
-        //   screen: "Auth/Signup",
-        //   navigationOptions: ({ navigation }) => ({
-        //     title: `Signup`,
-        //   })
+        //   routeConfigs: {
+        //     screen: "Auth/Signup",
+        //     navigationOptions: ({ navigation }) => ({
+        //       title: `Signup`
+        //     })
+        //   }
         // },
         // {
         //   routeName: "Auth/ForgotPassword",
-        //   screen: "Auth/ForgotPassword",
-        //   navigationOptions: ({ navigation }) => ({
-        //     title: `Forgot Password`,
-        //   })
-        // },
+        //   routeConfigs: {
+        //     screen: "Auth/ForgotPassword",
+        //     navigationOptions: ({ navigation }) => ({
+        //       title: `Forgot Password`
+        //     })
+        //   }
+        // }
       ]
     },
     {
       routeName: "Dashboard",
       navigationType: "bottomtab",
+      navigatorConfig: {
+        initialRouteName: "Dashboard/Home",
+        tabBarComponent: TabBarComponent
+      },
       routes: [
         {
           routeName: "Dashboard/Home",
-          screen: "Dashboard/Home",
-          params: {
-            icon: "home"
-          },
-          navigationOptions: ({ navigation }) => ({
-            title: `Home`
-          })
+          routeConfigs: {
+            screen: "Dashboard/Home",
+            params: {
+              title: "Home",
+              icon: "home"
+            },
+            navigationOptions: ({ navigation }) => ({
+              title: `Home`
+            })
+          }
         },
         {
           routeName: "Dashboard/Settings",
-          screen: "Dashboard/Settings",
-          params: {
-            icon: "settings"
-          },
-          navigationOptions: ({ navigation }) => ({
-            title: `Settings`
-          })
+          routeConfigs: {
+            screen: "Dashboard/Settings",
+            params: {
+              title: "Settings",
+              icon: "settings"
+            },
+            navigationOptions: ({ navigation }) => ({
+              title: `Settings`
+            })
+          }
         }
       ]
     }

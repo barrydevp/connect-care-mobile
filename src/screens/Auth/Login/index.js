@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Image, Text as RNText, Alert } from "react-native";
+import { Image, Text as RNText, Alert, View } from "react-native";
 import { Button, Icon, Layout, Input, Text } from "@ui-kitten/components";
 
 import { Validator } from "~/utils";
@@ -25,12 +25,17 @@ class Login extends React.Component {
 
     if (username && password) {
       dispatch({
-        type: "login/authenticate",
+        type: "auth/authenticate",
         payload: {
           username,
           password,
-          callback: () => {
-            navigation.navigate("Dashboard");
+          callback: token => {
+            navigation.navigate({
+              routeName: "Auth/ChoosePlace",
+              params: {
+                token
+              }
+            });
           }
         }
       });
@@ -62,8 +67,9 @@ class Login extends React.Component {
   arrowIcon = style => <Icon {...style} name="arrow-forward-outline" />;
 
   render() {
-    const { navigation, login } = this.props;
+    const { navigation, auth } = this.props;
     // console.log(login);
+    // console.log("loging: ", this.props.auth);
     const { username, password, secureTextEntry } = this.state;
 
     const propsInputUserName = (username => {

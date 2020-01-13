@@ -6,7 +6,7 @@ export default {
   namespace: "login",
   state: {
     status: false,
-    // "x-auth-key": "123",
+    "token": "test"
   },
   sagas,
   reducers,

@@ -12,7 +12,7 @@ function* authenticate({ payload: { username, password, callback } }) {
 
   if (data.success) {
     yield put({
-      type: "login/put_token",
+      type: "auth/put_token",
       payload: {
         token: data.token,
         status: data.status === "ok",
@@ -26,19 +26,21 @@ function* authenticate({ payload: { username, password, callback } }) {
 }
 
 export default {
+  fetchCurrentUserWithToken: function*({ payload: { token } }) {
+    try {
+      const currentUser = yield call(ApiServer.users.currentUser, token);
+
+      yield put({
+        type: "auth/change_currentUser",
+        payload: { currentUser }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   watchAuthenticate: [
     function*() {
-      yield takeEvery("login/authenticate", authenticate);
-    },
-    {
-      type: "watcher"
-    }
-  ],
-  watchTest: [
-    function*() {
-      yield takeEvery("login/test", function*() {
-        yield delay(5000);
-      });
+      yield takeEvery("auth/authenticate", authenticate);
     },
     {
       type: "watcher"

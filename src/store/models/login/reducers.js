@@ -15,27 +15,28 @@ export const reducers = {
       status
     };
   },
-  logout: state => {
+  logout: () => {
+    
     return {};
   }
 };
 
-export const persistConfig = {
-  // key: "",
-  // storage: "",
-  // blacklist: "",
-  // whitelist: ["x-auth-key"],
-  // transforms: [
-  //   createExpirationTransform.keyIsProperty(
-  //     {
-  //       expireKey: "expiresAt",
-  //       defaultState: () => ({
-  //         status: true
-  //       })
-  //     } /* {
-  //     whitelist: []
-  //   } */
-  //   )
-  // ],
-  // stateReconciler: ""
-};
+// export const persistConfig = {
+//   key: "",
+//   storage: "",
+//   blacklist: "",
+//   whitelist: ["x-auth-key"],
+//   transforms: [
+//     createExpirationTransform.keyIsProperty(
+//       {
+//         expireKey: "expiresAt",
+//         defaultState: () => ({
+//           status: true
+//         })
+//       } /* {
+//       whitelist: []
+//     } */
+//     )
+//   ],
+//   stateReconciler: ""
+// };

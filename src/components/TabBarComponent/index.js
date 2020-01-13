@@ -14,7 +14,6 @@ const getIcon = name => {
 
 export default TabBarComponent = ({ navigation }) => {
   const routes = navigation.state.routes;
-
   const onSelect = index => {
     const selectedTabRoute = navigation.state.routes[index];
     navigation.navigate(selectedTabRoute.routeName);
@@ -26,13 +25,16 @@ export default TabBarComponent = ({ navigation }) => {
         selectedIndex={navigation.state.index}
         onSelect={onSelect}
       >
-        {routes.map(e => (
-          <BottomNavigationTab
-            key={e.key}
-            title={e.routeName}
-            icon={getIcon((e.params && e.params.icon) || "person-outline")}
-          />
-        ))}
+        {routes.map(e => {
+          const { title, icon } = e.params || {};
+          return (
+            <BottomNavigationTab
+              key={e.key}
+              title={title || e.routeName}
+              icon={getIcon(icon || "person-outline")}
+            />
+          );
+        })}
       </BottomNavigation>
     </SafeAreaView>
   );

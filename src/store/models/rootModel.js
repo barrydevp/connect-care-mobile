@@ -11,14 +11,15 @@ export default {
         {
           expireKey: "expiresAt",
           defaultState: () => ({
-            status: true
+            // status: true
           })
         },
         {
-          whitelist: ["login"]
+          whitelist: ["auth"]
         }
       )
     ],
-    stateReconciler: autoMergeLevel2
+    stateReconciler: autoMergeLevel2,
+    whitelist: ["login", "auth"]
   }
 };
