@@ -1,96 +1,103 @@
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createDrawerNavigator } from "react-navigation-drawer";
-import HomeScreen from "../screens/Home/HomeScreen";
-import DrawerContainer from "../screens/DrawerContainer/DrawerContainer";
-import AuthLoadingScreen from "~/screens/AuthLoadingScreen"
-import AuthScreen from "../screens/AuthScreen";
+import React from "react";
+import { connect } from "react-redux";
+
+import { createNavigation } from "~/utils";
+import navigators from "./navigator.config";
+import screens from "~/screens";
 
 // console.disableYellowBox = true;
+@connect()
+export default class AppNavigation extends React.Component {
+  
+  render() {
+    const AppContainer = createNavigation(navigators, screens);
 
-export default AppContainer = createAppContainer(
-  createSwitchNavigator(
-    {
-      // LoggedSwitch: createSwitchNavigator({
+    return <AppContainer />;
+  }
+}
 
-      //   // When user is authenticated
-      //   LoggedIn: createStackNavigator({
+// export default AppContainer = createAppContainer(
+//   createSwitchNavigator(
+//     {
+//       // LoggedSwitch: createSwitchNavigator({
 
-      //     // The logged in root is generally a tab or drawer navigator
-      //     LoggedInRoot: createTabsOrDrawer({
-      //       Home,
-      //       Feed,
-      //       Notifications,
-      //       Settings,
-      //     }),
+//       //   // When user is authenticated
+//       //   LoggedIn: createStackNavigator({
 
-      //     // Main order process
-      //     Order: createOrderNavigator(),
+//       //     // The logged in root is generally a tab or drawer navigator
+//       //     LoggedInRoot: createTabsOrDrawer({
+//       //       Home,
+//       //       Feed,
+//       //       Notifications,
+//       //       Settings,
+//       //     }),
 
-      //     // Some authenticated stack screens...
-      //     Orders,
-      //     Profile,
-      //     EditProfile,
-      //   }),
+//       //     // Main order process
+//       //     Order: createOrderNavigator(),
 
-      //   // When user is not authenticated
-      //   LoggedOut: createStack({
-      //     LoggedOutRoot,
-      //     Signup,
-      //     ForgotPassword,
-      //   }),
-      // }),
+//       //     // Some authenticated stack screens...
+//       //     Orders,
+//       //     Profile,
+//       //     EditProfile,
+//       //   }),
 
-      // Stack screens that can be shared between LoggedIn and LoggedOut part
-      // those screens should not expect an authenticated user in context
-      // TermsOfService,
-      // GameRules,
-      // AppInfos,
-      // RGPD,
-      // Contacts,
-      AuthLoading: AuthLoadingScreen,
-      Auth: AuthScreen,
-      App: createDrawerNavigator(
-        {
-          MainDrawer: createStackNavigator(
-            {
-              TestAuth: AuthScreen
-              // Categories: CategoriesScreen,
-              // Recipe: RecipeScreen,
-              // RecipesList: RecipesListScreen,
-              // Ingredient: IngredientScreen,
-              // Search: SearchScreen,
-              // IngredientsDetails: IngredientsDetailsScreen
-            },
-            {
-              initialRouteName: "TestAuth",
-              // headerMode: 'float',
-              defaulfNavigationOptions: ({ navigation }) => ({
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  alignSelf: "center",
-                  flex: 1
-                }
-              })
-            }
-          )
-        },
-        {
-          drawerPosition: "left",
-          initialRouteName: "MainDrawer",
-          drawerWidth: 250,
-          contentComponent: DrawerContainer
-        }
-      )
-    },
-    {
-      initialRouteName: "AuthLoading",
-      headerMode: "none"
-    }
-  )
-);
+//       //   // When user is not authenticated
+//       //   LoggedOut: createStack({
+//       //     LoggedOutRoot,
+//       //     Signup,
+//       //     ForgotPassword,
+//       //   }),
+//       // }),
+
+//       // Stack screens that can be shared between LoggedIn and LoggedOut part
+//       // those screens should not expect an authenticated user in context
+//       // TermsOfService,
+//       // GameRules,
+//       // AppInfos,
+//       // RGPD,
+//       // Contacts,
+//       AuthLoading: AuthLoadingScreen,
+//       Auth: AuthScreen,
+//       App: createDrawerNavigator(
+//         {
+//           MainDrawer: createStackNavigator(
+//             {
+//               TestAuth: AuthScreen
+//               // Categories: CategoriesScreen,
+//               // Recipe: RecipeScreen,
+//               // RecipesList: RecipesListScreen,
+//               // Ingredient: IngredientScreen,
+//               // Search: SearchScreen,
+//               // IngredientsDetails: IngredientsDetailsScreen
+//             },
+//             {
+//               initialRouteName: "TestAuth",
+//               // headerMode: 'float',
+//               defaulfNavigationOptions: ({ navigation }) => ({
+//                 headerTitleStyle: {
+//                   fontWeight: "bold",
+//                   textAlign: "center",
+//                   alignSelf: "center",
+//                   flex: 1
+//                 }
+//               })
+//             }
+//           )
+//         },
+//         {
+//           drawerPosition: "left",
+//           initialRouteName: "MainDrawer",
+//           drawerWidth: 250,
+//           contentComponent: DrawerContainer
+//         }
+//       )
+//     },
+//     {
+//       initialRouteName: "AuthLoading",
+//       headerMode: "none"
+//     }
+//   )
+// );
 
 // // The order workflow is stateful, and it's a generally a bunch of multiple stack screens
 // // you don't necessarily need a global state like Redux to handle this,

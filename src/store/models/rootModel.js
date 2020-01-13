@@ -6,7 +6,7 @@ export default {
   persistConfig: {
     key: "root",
     storage: AsyncStorage,
-    transfroms: [
+    transforms: [
       createExpirationTransform.keyInProperty(
         {
           expireKey: "expiresAt",

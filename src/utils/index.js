@@ -8,6 +8,7 @@ import * as createExpirationTransform from "./createExpirationTransform";
 import _ENV from "./env";
 import _ from "lodash";
 import moment from "moment";
+import createNavigation from "./createNavigation";
 
 const returnTrue = () => true;
 const returnUndef = () => {};
@@ -31,5 +32,6 @@ export {
   createExpirationTransform,
   _ENV,
   _,
-  moment
+  moment,
+  createNavigation
 };

@@ -1,4 +1,4 @@
-import { createStoreFul } from "./redux-useful";
+import { createStoreFul } from "redux-useful";
 
 import models, { rootModel } from "./models";
 

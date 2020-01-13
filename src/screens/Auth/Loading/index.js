@@ -8,13 +8,13 @@ import { Spinner, Layout } from "@ui-kitten/components";
 import styles from "./styles";
 
 @connect(({ login, loginv1 }) => ({ login, loginv1 }))
-export default class extends React.Component {
+class Loading extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
-    this.props.dispatch({
-      type: "login/logout",
-      payload: { status: true }
-    });
+    // this.props.dispatch({
+    //   type: "login/logout",
+    //   payload: { status: true }
+    // });
     // this.props.dispatch({
     //   type: "login/put_token",
     //   payload: { token: "test", expiresAt: moment().subtract(10, "days") }
@@ -28,6 +28,8 @@ export default class extends React.Component {
       navigation
     } = this.props;
 
+    console.log(this.props.login);
+
     if (!status) {
       token && dispatch({ type: "login/logout" });
       navigation.navigate("Auth");
@@ -37,7 +39,7 @@ export default class extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    navigation.navigate(token && status ? "App" : "Auth");
+    navigation.navigate(token && status ? "Dashboard" : "Auth");
   };
 
   // Render any loading content that you like here
@@ -51,3 +53,7 @@ export default class extends React.Component {
     );
   }
 }
+
+export default Loading;
+
+// module.exports = Loading
