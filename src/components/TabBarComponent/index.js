@@ -8,17 +8,20 @@ import {
   Text
 } from "@ui-kitten/components";
 
+import { is } from "~/utils";
+
 const getIcon = name => {
   return style => <Icon {...style} name={name} />;
 };
 
 export default TabBarComponent = ({ navigation }) => {
   const routes = navigation.state.routes;
+  // console.log(navigation.state);
   const onSelect = index => {
     const selectedTabRoute = navigation.state.routes[index];
     navigation.navigate(selectedTabRoute.routeName);
   };
-  
+
   return (
     <SafeAreaView>
       <BottomNavigation
@@ -26,8 +29,11 @@ export default TabBarComponent = ({ navigation }) => {
         onSelect={onSelect}
       >
         {routes.map(e => {
-          const { title, icon } = e.params || {};
-          console.log(e);
+          const { index, params, routes } = e;
+          const { icon, title } =
+            params ||
+            ((routes && routes[0] && routes[0].params) ||
+            {});
           return (
             <BottomNavigationTab
               key={e.key}

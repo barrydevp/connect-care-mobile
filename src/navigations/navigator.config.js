@@ -17,12 +17,10 @@ export default {
     initialRouteName: "AuthLoading",
     headerMode: "none"
   },
-  routes: [
+  routeConfigs: [
     {
       routeName: "AuthLoading",
-      routeConfigs: {
-        screen: "Auth/Loading"
-      }
+      screen: "Auth/Loading"
     },
     {
       routeName: "Auth",
@@ -31,49 +29,41 @@ export default {
         initialRouteName: "Auth/Login",
         headerMode: "screen"
       },
-      routes: [
+      routeConfigs: [
         {
           routeName: "Auth/Login",
-          routeConfigs: {
-            screen: "Auth/Login",
-            navigationOptions: ({ navigation }) => ({
-              title: `Login`,
-              headerShown: false
-              // header: (props) => {
-              //   return <AuthTopBarComponent {...props} />;
-              // }
-            })
-          }
+          screen: "Auth/Login",
+          navigationOptions: ({ navigation }) => ({
+            title: `Login`,
+            headerShown: false
+            // header: (props) => {
+            //   return <AuthTopBarComponent {...props} />;
+            // }
+          })
         },
         {
           routeName: "Auth/ChoosePlace",
-          routeConfigs: {
-            screen: "Auth/ChoosePlace",
-            navigationOptions: ({ navigation }) => ({
-              title: `ChoosePlace`,
-              header: props => {
-                return <AuthTopBarComponent {...props} />;
-              }
-            })
-          }
+          screen: "Auth/ChoosePlace",
+          navigationOptions: ({ navigation }) => ({
+            title: `ChoosePlace`,
+            header: props => {
+              return <AuthTopBarComponent {...props} />;
+            }
+          })
         }
         // {
         //   routeName: "Auth/Signup",
-        //   routeConfigs: {
         //     screen: "Auth/Signup",
         //     navigationOptions: ({ navigation }) => ({
         //       title: `Signup`
         //     })
-        //   }
         // },
         // {
         //   routeName: "Auth/ForgotPassword",
-        //   routeConfigs: {
         //     screen: "Auth/ForgotPassword",
         //     navigationOptions: ({ navigation }) => ({
         //       title: `Forgot Password`
         //     })
-        //   }
         // }
       ]
     },
@@ -84,44 +74,48 @@ export default {
         initialRouteName: "Dashboard/Home",
         tabBarComponent: TabBarComponent
       },
-      routes: [
+      routeConfigs: [
         {
           routeName: "Dashboard/Home",
-          routeConfigs: {
-            screen: "Dashboard/Home",
-            params: {
-              title: "Home",
-              icon: "home"
-            },
-            navigationOptions: ({ navigation }) => ({
-              title: `Home`
-            })
-          }
+          screen: "Dashboard/Home",
+          params: {
+            title: "Home",
+            icon: "home"
+          },
+          navigationOptions: ({ navigation }) => ({
+            title: `Home`
+          })
         },
         {
           routeName: "Dashboard/Settings",
-          routeName: "Dashboard",
           navigationType: "stack",
           navigatorConfig: {
             initialRouteName: "Dashboard/Settings/Main",
             headerMode: "screen",
-            navigationOptions: {
-              title: `Settings`
-            }
+            // contentComponent: DrawerComponent
           },
-          routes: [
+          routeConfigs: [
             {
               routeName: "Dashboard/Settings/Main",
-              routeConfigs: {
-                screen: "Dashboard/Settings",
-                params: {
-                  title: "Settings",
-                  icon: "settings"
-                },
-                navigationOptions: ({ navigation }) => ({
-                  title: `Settings`
-                })
-              }
+              screen: "Dashboard/Settings",
+              params: {
+                title: "Settings",
+                icon: "settings"
+              },
+              navigationOptions: ({ navigation }) => ({
+                title: `Settings`
+              })
+            },
+            {
+              routeName: "Dashboard/Settings/UpdateProfile",
+              screen: "Settings/UpdateProfile",
+              params: {
+                title: "UpdateProfile",
+                icon: "settings"
+              },
+              navigationOptions: ({ navigation }) => ({
+                title: `UpdateProfile`
+              })
             }
           ]
         }
