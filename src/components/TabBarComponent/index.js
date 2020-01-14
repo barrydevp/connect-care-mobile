@@ -18,7 +18,7 @@ export default TabBarComponent = ({ navigation }) => {
     const selectedTabRoute = navigation.state.routes[index];
     navigation.navigate(selectedTabRoute.routeName);
   };
-
+  
   return (
     <SafeAreaView>
       <BottomNavigation
@@ -27,6 +27,7 @@ export default TabBarComponent = ({ navigation }) => {
       >
         {routes.map(e => {
           const { title, icon } = e.params || {};
+          console.log(e);
           return (
             <BottomNavigationTab
               key={e.key}

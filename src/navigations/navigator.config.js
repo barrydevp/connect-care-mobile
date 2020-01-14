@@ -38,10 +38,11 @@ export default {
             screen: "Auth/Login",
             navigationOptions: ({ navigation }) => ({
               title: `Login`,
-              header: (props) => {
-                return <AuthTopBarComponent {...props} />;
-              }
-            }),
+              headerShown: false
+              // header: (props) => {
+              //   return <AuthTopBarComponent {...props} />;
+              // }
+            })
           }
         },
         {
@@ -50,7 +51,7 @@ export default {
             screen: "Auth/ChoosePlace",
             navigationOptions: ({ navigation }) => ({
               title: `ChoosePlace`,
-              header: (props) => {
+              header: props => {
                 return <AuthTopBarComponent {...props} />;
               }
             })
@@ -99,16 +100,30 @@ export default {
         },
         {
           routeName: "Dashboard/Settings",
-          routeConfigs: {
-            screen: "Dashboard/Settings",
-            params: {
-              title: "Settings",
-              icon: "settings"
-            },
-            navigationOptions: ({ navigation }) => ({
+          routeName: "Dashboard",
+          navigationType: "stack",
+          navigatorConfig: {
+            initialRouteName: "Dashboard/Settings/Main",
+            headerMode: "screen",
+            navigationOptions: {
               title: `Settings`
-            })
-          }
+            }
+          },
+          routes: [
+            {
+              routeName: "Dashboard/Settings/Main",
+              routeConfigs: {
+                screen: "Dashboard/Settings",
+                params: {
+                  title: "Settings",
+                  icon: "settings"
+                },
+                navigationOptions: ({ navigation }) => ({
+                  title: `Settings`
+                })
+              }
+            }
+          ]
         }
       ]
     }

@@ -7,23 +7,27 @@ export function currentUser(token) {
       "X-Auth-Key": token
     }
   }).then(data => {
-    if (!_.isEmpty(data))
-      return {
-        ..._.omit(data, ["isLienThong", "password"]),
-        places:
-          (is.array(data.places) &&
-            data.places.map(e =>
-              _.omit(e, [
-                "groupPlacesId",
-                "passwordOfPlace",
-                "placesUsers",
-                "usernameOfPlace"
-              ])
-            )) ||
-          []
-      };
-
-    return;
+    // console.log(data);
+      if (!_.isEmpty(data)){
+        return {
+          ..._.omit(data, ["isLienThong", "password"]),
+          places:
+            (is.array(data.places) &&
+              data.places.map(e =>
+                _.omit(e, [
+                  "groupPlacesId",
+                  "passwordOfPlace",
+                  "placesUsers",
+                  "usernameOfPlace"
+                ])
+              )) ||
+            []
+        };
+      } else {
+        if(!data.success) {
+          throw data;
+        }
+      }
   });
 }
 

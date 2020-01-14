@@ -34,9 +34,6 @@ export const reducers = [
         expiresAt,
         status
       };
-    },
-    logout: () => {
-      return {};
     }
   }
   /* state => {

@@ -1,14 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 import { createNavigation } from "~/utils";
 import navigators from "./navigator.config";
 import screens from "~/screens";
 
 // console.disableYellowBox = true;
-@connect()
+// @connect(({ auth }) => ({ auth }))
 export default class AppNavigation extends React.Component {
-  
   render() {
     const AppContainer = createNavigation(navigators, screens);
 

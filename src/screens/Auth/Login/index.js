@@ -6,7 +6,7 @@ import { Button, Icon, Layout, Input, Text } from "@ui-kitten/components";
 import { Validator } from "~/utils";
 import styles from "./styles";
 
-@connect(({ login }) => ({ login }))
+@connect(({ auth }) => ({ auth }))
 class Login extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {};
@@ -30,6 +30,9 @@ class Login extends React.Component {
           username,
           password,
           callback: token => {
+            this.setState(state => ({
+              password: undefined
+            }));
             navigation.navigate({
               routeName: "Auth/ChoosePlace",
               params: {

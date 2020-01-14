@@ -73,7 +73,9 @@ export {
   widthPercentageToDP,
   heightPercentageToDP,
   listenOrientationChange,
-  removeOrientationListener
+  removeOrientationListener,
+  screenHeight,
+  screenWidth
 };
 
 export const hp = heightPercentageToDP;

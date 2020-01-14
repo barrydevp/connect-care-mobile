@@ -7,7 +7,7 @@ import {
 
 import styles from "./styles";
 
-const BackIcon = style => <Icon {...style} name="arrow-back" />;
+const BackIcon = style => <Icon {...style} width={28} height={28} name="backspace-outline" />;
 
 export default TopBarComponent = ({ scene, previous, navigation }) => {
   const { options } = scene.descriptor;

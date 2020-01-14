@@ -1,12 +1,51 @@
-import React from "react";
+import React/* , { useEffect } */ from "react";
 // import moment from "moment";
 import { connect } from "react-redux";
 // import { ActivityIndicat, StatusBar, View } from "react-native";
-import { NavigationActions } from "react-navigation";
+// import { NavigationActions } from "react-navigation";
 
 import { Spinner, Layout } from "@ui-kitten/components";
+import {
+  navigateAuthActions,
+  navigateChoosePlaceActions,
+  navigateDashboardActions
+} from "~/navigations/navigationActions";
 
 import styles from "./styles";
+
+// function Loading(props) {
+//   const { auth, dispatch, navigation } = props;
+//   // console.log("auth");
+//   // const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     // console.log(auth);
+//     const { "x-auth-key": token, status, placesId } = auth || {};
+
+//     if (token && status) {
+//       if (placesId) {
+//         navigation.dispatch(navigateDashboardActions());
+//         // setLoading(false);
+//         return;
+//       }
+
+//       navigation.dispatch(navigateChoosePlaceActions());
+//       return;
+//     }
+
+//     // setLoading(false);
+//     dispatch({ type: "auth/logout" });
+//     navigation.dispatch(navigateAuthActions());
+//   }, [auth]);
+
+//   return (
+//     <Layout style={styles.container}>
+//       <Spinner />
+//     </Layout>
+//   );
+// }
+
+// export default connect(({ auth }) => ({ auth }))(Loading);
 
 @connect(({ auth }) => ({ auth }))
 class Loading extends React.Component {
@@ -24,15 +63,32 @@ class Loading extends React.Component {
   _bootstrapAsync = async () => {
     const {
       auth: { "x-auth-key": token, status, placesId },
-      navigation
+      navigation,
+      dispatch
     } = this.props;
 
-    if (!status) {
-      token && dispatch({ type: "auth/logout" });
-      navigation.navigate("Auth");
+    // navigation.dispatch(navigateChoosePlaceActions());
+    //   return;
 
+    // if (!status) {
+    //   dispatch({ type: "auth/logout", payload: { navigation } })
+    //   // token && dispatch({ type: "auth/logout" });
+    //   // navigation.dispatch(navigateAuthActions());
+
+    //   return;
+    // }
+
+    if (token && status) {
+      if (placesId) {
+        navigation.dispatch(navigateDashboardActions());
+        return;
+      }
+
+      navigation.dispatch(navigateChoosePlaceActions());
       return;
     }
+
+    dispatch({ type: "auth/logout", payload: { navigation } })
 
     // const navigateAction = NavigationActions.navigate({
     //   routeName: "Auth",
@@ -52,15 +108,15 @@ class Loading extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    navigation.navigate(
-      (token && status && ((placesId && "Dashboard") || "Auth/ChoosePlace")) ||
-        "Auth/Login"
-    );
+    // navigation.navigate(
+    //   (token && status && ((placesId && "Dashboard") || "Auth/ChoosePlace")) ||
+    //     "Auth/Login"
+    // );
   };
 
   // Render any loading content that you like here
   render() {
-    // console.log("logingv1: ", this.props.loginv1);
+    // console.log("logingv1: ", this.props.auth);
     return (
       <Layout style={styles.container}>
         <Spinner />
