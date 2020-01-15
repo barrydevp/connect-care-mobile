@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Image, Text as RNText, Alert, View } from "react-native";
 import { Button, Icon, Layout, Input, Text } from "@ui-kitten/components";
 
-import { Validator } from "~/utils";
+import { helper } from "~/utils";
 import styles from "./styles";
 
 @connect(({ auth }) => ({ auth }))
@@ -70,26 +70,32 @@ class Login extends React.Component {
   arrowIcon = style => <Icon {...style} name="arrow-forward-outline" />;
 
   render() {
-    const { navigation, auth } = this.props;
+    // const { navigation, auth } = this.props;
     // console.log(login);
     // console.log("loging: ", this.props.auth);
     const { username, password, secureTextEntry } = this.state;
 
-    const propsInputUserName = (username => {
-      const isUsername =
-        username === undefined || Validator.isUsername(username);
+    const {
+      caption: captionUsername,
+      status: statusUsername,
+      isValidate: isValidateUsername
+    } = helper.getCaptionAndStatusOfInput("isUsername", username)(
+      {
+        success: "",
+        error: "Vui lòng nhập từ 6 đến 50 ký tự bao gồm chữ, số và _"
+      },
+      { success: "", error: "danger" }
+    );
+    const {
+      caption: captionPassword,
+      status: statusPassword,
+      isValidate: isValidatePassword
+    } = helper.getCaptionAndStatusOfInput("isPassword", password)(
+      { success: "", error: "Vui lòng nhập mật khẩu" },
+      { success: "", error: "danger" }
+    );
 
-      return [
-        isUsername,
-        isUsername ? "" : "Vui lòng nhập từ 6 đến 50 ký tự bao gồm chữ, số và _"
-      ];
-    })(username);
-    const propsInputPassword = (password => {
-      const isPassword =
-        password === undefined || Validator.isUsername(password);
-
-      return [isPassword, isPassword ? "" : "Vui lòng nhập mật khẩu"];
-    })(password);
+    // console.log(captionUsername, statusUsername);
 
     return (
       <Layout style={styles.container}>
@@ -113,8 +119,8 @@ class Login extends React.Component {
             onChangeText={text => this.setState({ username: text })}
             textContentType={"username"}
             clearButtonMode={"while-editing"}
-            status={propsInputUserName[0] ? "" : "danger"}
-            caption={propsInputUserName[1]}
+            status={statusUsername}
+            caption={captionUsername}
           />
           <Input
             style={styles.input}
@@ -126,8 +132,8 @@ class Login extends React.Component {
             onChangeText={text => this.setState({ password: text })}
             textContentType={"password"}
             clearButtonMode={"while-editing"}
-            status={propsInputPassword[0] ? "" : "danger"}
-            caption={propsInputPassword[1]}
+            status={statusPassword}
+            caption={captionPassword}
           />
         </Layout>
         <Layout style={styles.footerContainer}>
@@ -136,8 +142,8 @@ class Login extends React.Component {
             status="info"
             icon={this.arrowIcon}
             disabled={
-              !propsInputPassword[0] ||
-              !propsInputUserName[0] ||
+              !isValidateUsername ||
+              !isValidatePassword ||
               !username ||
               !password
             }

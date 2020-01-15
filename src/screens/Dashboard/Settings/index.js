@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Icon, Button, Layout, Avatar, Text } from "@ui-kitten/components";
 
 import withAuth from "~/wrapcomponents/withAuth";
+import { navigateSettingsUpdateProfileActions } from "~/navigations/navigationActions";
 import styles from "./styles";
 
 const getIcon = name => style => <Icon {...style} name={name} />;
@@ -10,10 +11,16 @@ const getIcon = name => style => <Icon {...style} name={name} />;
 @connect(({ auth }) => ({ auth }))
 // @withAuth
 export default class Settings extends React.Component {
+
   onPressLogout = () => {
     const { dispatch, navigation } = this.props;
     // console.log(dispatch);
     dispatch({ type: "auth/logout", payload: { navigation } });
+  };
+
+  onPressUpdateProfile = () => {
+    const { dispatch, navigation } = this.props;
+    navigation.dispatch(navigateSettingsUpdateProfileActions());
   };
 
   render() {
@@ -64,7 +71,11 @@ export default class Settings extends React.Component {
         </Layout>
         <Layout style={styles.bodyContainer}>
           <Layout style={styles.groupButton}>
-            <Button icon={getIcon("edit-2-outline")} appearance="ghost">
+            <Button
+              icon={getIcon("edit-2-outline")}
+              appearance="ghost"
+              onPress={this.onPressUpdateProfile}
+            >
               Update Profile
             </Button>
             <Button icon={getIcon("unlock-outline")} appearance="ghost">

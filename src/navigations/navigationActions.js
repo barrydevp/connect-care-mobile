@@ -21,8 +21,18 @@ const navigateDashboardActions = params =>
     // action: NavigationActions.navigate({ routeName: "Auth/ChoosePlace" })
   });
 
+const navigateSettingsUpdateProfileActions = params =>
+  NavigationActions.navigate({
+    routeName: "Dashboard/Settings",
+    params: params,
+    action: NavigationActions.navigate({
+      routeName: "Dashboard/Settings/UpdateProfile"
+    })
+  });
+
 export {
   navigateAuthActions,
   navigateChoosePlaceActions,
-  navigateDashboardActions
+  navigateDashboardActions,
+  navigateSettingsUpdateProfileActions
 };

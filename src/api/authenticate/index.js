@@ -1,9 +1,9 @@
 import { request, _ENV } from "~/utils";
 
-export function login(params) {
+export function login(body) {
   return request(`${_ENV.API_ENDPOINT}/authenticate`, {
     method: "POST",
-    body: params
+    body
   });
 }
 

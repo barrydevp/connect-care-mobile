@@ -103,7 +103,8 @@ export default {
                 icon: "settings"
               },
               navigationOptions: ({ navigation }) => ({
-                title: `Settings`
+                title: `Settings`,
+                headerShown: false
               })
             },
             {

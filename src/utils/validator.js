@@ -1,7 +1,7 @@
 import validator from "validator";
 
 const isUsername = (username) => {
-  return validator.matches(username, /\w{6,50}/)
+  return validator.matches(username, /^\w{6,50}$/)
 }
 
 const isPassword = (password) => {

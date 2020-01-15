@@ -10,6 +10,8 @@ import {
 
 import { is } from "~/utils";
 
+import styles from "./styles";
+
 const getIcon = name => {
   return style => <Icon {...style} name={name} />;
 };
@@ -31,11 +33,10 @@ export default TabBarComponent = ({ navigation }) => {
         {routes.map(e => {
           const { index, params, routes } = e;
           const { icon, title } =
-            params ||
-            ((routes && routes[0] && routes[0].params) ||
-            {});
+            params || (routes && routes[0] && routes[0].params) || {};
           return (
             <BottomNavigationTab
+              style={styles.bottomNavigationTab}
               key={e.key}
               title={title || e.routeName}
               icon={getIcon(icon || "person-outline")}

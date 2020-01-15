@@ -150,8 +150,8 @@ export default function request(url, option) {
         const status = e.name;
         console.log("catch request window: ", e);
 
-        Alert && Alert(`Có lỗi xảy ra: `, "Lỗi kết nối hệ thống...");
-
+        Alert && Alert.alert(`Có lỗi xảy ra: `, "Lỗi kết nối hệ thống...");
+        throw e;
         // environment should not be used
         /* if (status === 403) {
         router.push('/exception/403', '/exception/403');

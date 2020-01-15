@@ -67,6 +67,8 @@ class Loading extends React.Component {
       dispatch
     } = this.props;
 
+    // console.log(this.props.auth)
+
     // navigation.dispatch(navigateChoosePlaceActions());
     //   return;
 

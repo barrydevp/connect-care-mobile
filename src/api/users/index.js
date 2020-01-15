@@ -1,5 +1,13 @@
 import { request, _ENV, _, is } from "~/utils";
 
+export function putUser(id, headers, body) {
+  return request(`${_ENV.API_SERVER}/users/${id}`, {
+    method: "PUT",
+    headers,
+    body
+  })
+}
+
 export function currentUser(token) {
   return request(`${_ENV.API_SERVER}/currentUser`, {
     method: "GET",
