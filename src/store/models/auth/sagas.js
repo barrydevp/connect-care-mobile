@@ -47,20 +47,45 @@ function* updateProfile({ payload: { body } }) {
     // console.log(body);
 
     yield call(ApiServer.users.putUser, auth.currentUser.id, headers, body);
+    const currentUser = yield call(
+      ApiServer.users.currentUser,
+      auth["x-auth-key"]
+    );
+    console.log("here", currentUser)
     yield put({
-      type: "auth/fetchCurrentUserWithToken",
-      payload: {
-        token: auth["x-auth-key"],
-        onSucces: () => {
-          Alert.alert("Cập nhật thành công!");
-        },
-        onError: () => {
-          Alert.alert("Lấy thông tin sau cập nhật thất bại!");
-        }
-      }
+      type: "auth/change_currentUser",
+      payload: { currentUser }
     });
+    Alert.alert("Cập nhật thành công!");
   } catch (error) {
     console.log(error);
+    Alert.alert(error && error.error && error.error.message || "Có lỗi xảy ra!")
+  }
+}
+
+function* changePassword({ payload: { body, callback } }) {
+  try {
+    const state = yield select();
+    const { auth } = state || {};
+    const headers = {
+      "x-auth-key": auth["x-auth-key"]
+    };
+
+    const response = yield call(
+      ApiServer.users.changePass,
+      auth.currentUser.id,
+      headers,
+      body
+    );
+    if (response && response.success) {
+      Alert.alert("Cập nhật mật khẩu mới thành công!");
+      callback && callback();
+    } else {
+      Alert.alert(`${response.error.message}`);
+    }
+  } catch (error) {
+    console.log(error);
+    Alert.alert(`Lỗi hệ thống!`);
   }
 }
 
@@ -88,9 +113,21 @@ export default {
   watchUpdateProfile: [
     function*() {
       while (true) {
-        console.log("test");
+        // console.log("test");
         const action = yield take("auth/updateProfile");
         yield call(updateProfile, action);
+      }
+    },
+    {
+      type: "watcher"
+    }
+  ],
+  watchChangePassword: [
+    function*() {
+      while (true) {
+        // console.log("test");
+        const action = yield take("auth/changePassword");
+        yield call(changePassword, action);
       }
     },
     {

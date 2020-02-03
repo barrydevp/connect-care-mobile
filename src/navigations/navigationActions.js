@@ -30,9 +30,19 @@ const navigateSettingsUpdateProfileActions = params =>
     })
   });
 
+const navigateSettingsChangePasswordActions = params =>
+  NavigationActions.navigate({
+    routeName: "Dashboard/Settings",
+    params: params,
+    action: NavigationActions.navigate({
+      routeName: "Dashboard/Settings/ChangePassword"
+    })
+  });
+
 export {
   navigateAuthActions,
   navigateChoosePlaceActions,
   navigateDashboardActions,
-  navigateSettingsUpdateProfileActions
+  navigateSettingsUpdateProfileActions,
+  navigateSettingsChangePasswordActions
 };

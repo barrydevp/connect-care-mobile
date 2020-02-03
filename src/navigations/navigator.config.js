@@ -91,7 +91,7 @@ export default {
           navigationType: "stack",
           navigatorConfig: {
             initialRouteName: "Dashboard/Settings/Main",
-            headerMode: "screen",
+            headerMode: "screen"
             // contentComponent: DrawerComponent
           },
           routeConfigs: [
@@ -116,6 +116,17 @@ export default {
               },
               navigationOptions: ({ navigation }) => ({
                 title: `UpdateProfile`
+              })
+            },
+            {
+              routeName: "Dashboard/Settings/ChangePassword",
+              screen: "Settings/ChangePassword",
+              params: {
+                title: "ChangePassword",
+                icon: "settings"
+              },
+              navigationOptions: ({ navigation }) => ({
+                title: `ChangePassword`
               })
             }
           ]

@@ -1,7 +1,7 @@
-import UpdateProfile from "./UpdateProfile"
-import ChangePass from "./ChangePass"
+import UpdateProfile from "./UpdateProfile";
+import ChangePassword from "./ChangePassword";
 
 export default {
   UpdateProfile,
-  ChangePass,
-}
+  ChangePassword
+};

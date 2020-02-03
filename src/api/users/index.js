@@ -17,6 +17,9 @@ export function currentUser(token) {
   }).then(data => {
     // console.log(data);
       if (!_.isEmpty(data)){
+        if(!is.undef(data.success) && !data.success) {
+          throw data;
+        }
         return {
           ..._.omit(data, ["isLienThong", "password"]),
           places:
@@ -31,10 +34,6 @@ export function currentUser(token) {
               )) ||
             []
         };
-      } else {
-        if(!data.success) {
-          throw data;
-        }
       }
   });
 }
@@ -47,4 +46,12 @@ export function auth_routes(token, params) {
     },
     params
   });
+}
+
+export function changePass(id, headers, body) {
+  return request(`${_ENV.API_SERVER}/userspass/changepass/${id}`, {
+    method: "POST",
+    headers,
+    body
+  })
 }

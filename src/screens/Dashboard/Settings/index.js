@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { Icon, Button, Layout, Avatar, Text } from "@ui-kitten/components";
 
 import withAuth from "~/wrapcomponents/withAuth";
-import { navigateSettingsUpdateProfileActions } from "~/navigations/navigationActions";
+import {
+  navigateSettingsUpdateProfileActions,
+  navigateSettingsChangePasswordActions
+} from "~/navigations/navigationActions";
 import styles from "./styles";
 
 const getIcon = name => style => <Icon {...style} name={name} />;
@@ -11,7 +14,6 @@ const getIcon = name => style => <Icon {...style} name={name} />;
 @connect(({ auth }) => ({ auth }))
 // @withAuth
 export default class Settings extends React.Component {
-
   onPressLogout = () => {
     const { dispatch, navigation } = this.props;
     // console.log(dispatch);
@@ -21,6 +23,11 @@ export default class Settings extends React.Component {
   onPressUpdateProfile = () => {
     const { dispatch, navigation } = this.props;
     navigation.dispatch(navigateSettingsUpdateProfileActions());
+  };
+
+  onPressChangePassword = () => {
+    const { dispatch, navigation } = this.props;
+    navigation.dispatch(navigateSettingsChangePasswordActions());
   };
 
   render() {
@@ -78,7 +85,11 @@ export default class Settings extends React.Component {
             >
               Update Profile
             </Button>
-            <Button icon={getIcon("unlock-outline")} appearance="ghost">
+            <Button
+              icon={getIcon("unlock-outline")}
+              appearance="ghost"
+              onPress={this.onPressChangePassword}
+            >
               Change Password
             </Button>
             <Button icon={getIcon("alert-circle-outline")} appearance="ghost">
