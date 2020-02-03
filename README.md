@@ -36,31 +36,33 @@ https://docs.expo.io/versions/latest/workflow/debugging/
 * Folder
 (chỉ liệt kê các file và thư mục chính)
 
-- |____App.js     Component Root App chứa các Component bao ngoài AppContainer để thiết lập config UI, Store, Intl, Redux-Provider,...
-- |____app.json       Config app
-- |____src        Thư mục hoạt động chính
-- | |____locales      Thư mục chứa các file liên quan đến message đa ngôn ngữ
+![folder structure](./structurefolder.png)
+
+- |____App.js     (Component Root App chứa các Component bao ngoài AppContainer để thiết lập config UI, Store, Intl, Redux-Provider,...)
+- |____app.json       (Config app)
+- |____src        (Thư mục hoạt động chính)
+- | |____locales      (Thư mục chứa các file liên quan đến message đa ngôn ngữ)
 - | | |____messages
 - | | |____errors
-- | |____AppContainer.js        Compononent chứa toàn bộ các Navigation (hiện tại đang chỉ chứa navigation, có thể phát triển thêm)
-- | |____AppStyles.js           Style của AppContainer      
-- | |____utils       Thư mục chứa các file hỗ trợ, tiện ích, có một vài file là core của Navigation tự xây dựng vì vậy khả năng hoàn chỉnh chỉ là 95%
-- | |____wrapcomponents       Các wrap component (giống với các wrap trên Project của web)
-- | |____screens      Nơi chứa các component màn hình, cấu trúc như dưới
-- | | |____index.js  file index.js(rất quan trọng) là nơi khai báo toàn bộ các Screen để có thể sử dụng trong config của Navigation
-- | |____components       Nơi chứa các component có thể sử dụng chung được( ví dụ như 1 list view mà chỉ thay đổi label, data,... )
-- | |____navigations      Nơi chứa config navigation với screen(quan trọng)
+- | |____AppContainer.js        (Compononent chứa toàn bộ các Navigation (hiện tại đang chỉ chứa navigation, có thể phát triển thêm))
+- | |____AppStyles.js           (Style của AppContainer)   
+- | |____utils       (Thư mục chứa các file hỗ trợ, tiện ích, có một vài file là core của Navigation tự xây dựng vì vậy khả năng hoàn chỉnh chỉ là 95%)
+- | |____wrapcomponents       (Các wrap component (giống với các wrap trên Project của web))
+- | |____screens      (Nơi chứa các component màn hình, cấu trúc như dưới)
+- | | |____index.js  (file index.js(rất quan trọng) là nơi khai báo toàn bộ các Screen để có thể sử dụng trong config của Navigation)
+- | |____components       (Nơi chứa các component có thể sử dụng chung được( ví dụ như 1 list view mà chỉ thay đổi label, data,... ))
+- | |____navigations      (Nơi chứa config navigation với screen(quan trọng))
 - | | |____navigator.config.js
 - | | |____navigationActions.js
 - | | |____AppNavigation.js
-- | |____api        Giống với service trên Project web(nơi khai báo các service gọi lên API lấy dữ liệu)
-- | |____data       Giả lập dữ liệu
-- | |____assets       Thư mục chứa các asset như icon, image, ...
-- | |____store        Thư mục store của redux-useful
+- | |____api        (Giống với service trên Project web(nơi khai báo các service gọi lên API lấy dữ liệu))
+- | |____data       (Giả lập dữ liệu)
+- | |____assets       (Thư mục chứa các asset như icon, image, ...)
+- | |____store        (Thư mục store của redux-useful)
 - | | |____index.js
-- | | |____models         Giống với models trên Project web(chỉ khác ở chỗ, tách reducers và sagas ra một folder riêng(sagas tương ứng với effects))
+- | | |____models         (Giống với models trên Project web(chỉ khác ở chỗ, tách reducers và sagas ra một folder riêng(sagas tương ứng với effects)))
 - | | | |____index.js
-- | | | |____rootModel.js     config của root store
+- | | | |____rootModel.js     (config của root store)
 - | | | |____auth             
 - | | | | |____sagas.js
 - | | | | |____index.js
