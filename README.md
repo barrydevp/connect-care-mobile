@@ -159,6 +159,10 @@ import { put, call, takeEvery, delay, select, take } from "redux-saga/effects";
 ...
 ``
 
+### Useful source
+[https://colors.eva.design/](https://colors.eva.design/)
+[https://akveo.github.io/eva-icons/](https://akveo.github.io/eva-icons/)
+
 ### Author
 barrydevp
 
